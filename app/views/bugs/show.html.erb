@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Projects</h2>
+  <%= link_to('New Project', new_project_path, class: 'btn btn-success')  %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>User</th>
+        <th>Feature</th>
+        <th>Bug</th>
+        <th>Screen Shot</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bugs.each do |bug|%>
+      <tr>
+        <td><%= bug.title %></td>
+        <td><%= bug.user.name%></td>
+        <td><%= bug.check_feature%></td>
+        <td><%= bug.check_bug%></td>
+        <td>
+          <%if bug.screen_shot.exists?%>
+          <img src="<%= bug.screen_shot.url(:thumb)%>" alt="">
+          <%else %>
+          No Image
+          <%end%>
+        </td>
+        <td><%= bug.status%></td>
+
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

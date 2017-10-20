@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>Projects</h2>
+  <%= link_to('New Project', new_project_path, class: 'btn btn-success')  %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Bugs</th>
+        <th>Feature</th>
+        <th>Action</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project|%>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.bugs.bug.count%></td>
+        <td><%= project.bugs.feature.count%></td>
+        <td class="center">
+            <span>
+              <%= link_to 'edit', edit_project_path(project) %>
+            </span>
+            <span>
+                <%= link_to 'delete',  project_path(project),  method: :delete, data: { confirm: 'Are you sure?' } %>
+            </span>
+        </td>
+        <% unless current_user.has_role RoleConstant::DEVELOPER%>
+          <td><%= link_to 'Add Bug', new_project_bug_path(project), class: "btn btn-info" %></td>
+        <% end %>
+        <td><%= link_to 'Show Bugs', project_bug_path(project, project.id), class: "btn btn-success" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

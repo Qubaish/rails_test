@@ -1,0 +1,32 @@
+<%= form_for([@project, @bug]) do |f| %>
+   <div class="form-group">
+      <%=f.label :title%>
+       <%=f.text_field :title ,class: 'form-control', placeholder: 'Enter title'%>
+   </div>
+   <div class="form-group">
+      <%=f.label :description%>
+       <%=f.text_area :description ,class: 'form-control', placeholder: 'Description'%>
+   </div>
+   <div class="form-group">
+      <%=f.label :deadline%>
+       <%=f.date_field :deadline ,class: 'form-control', placeholder: 'Description'%>
+   </div>
+   <div class="form-group">
+      <%=f.label :user%>
+      <%=f.select :user_id, @users.map{ |c| [c.name, c.id] }, {prompt: "Select User"}, {class: 'form-control'}%>
+   </div>
+   <div class="form-group">
+     <%= f.label :bug_type %><br />
+     <%= f.select :bug_type, Bug.bug_types.keys, {}, :onchange => "update_status_div(this.value )" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :screen_shot %><br />
+    <%= f.file_field :screen_shot %>
+ </div>
+ <%= f.hidden_field :creator_id, :value => current_user.id %>
+ <%= f.hidden_field :project_id, :value => @project.id %>
+ <div class="form-group" id="status">
+    <%= render :partial => 'status', :locals=>{:f=>f, :status=>Bug::FEATURE_STATUS}  %>
+ </div>
+   <div><p><%= f.submit 'Submit', class: "btn btn-default" %>
+<% end %>

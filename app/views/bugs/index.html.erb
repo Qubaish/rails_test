@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>Projects</h2>
+  <%= link_to('New Project', new_project_path, class: 'btn btn-success')  %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Feature</th>
+        <th>Bug</th>
+        <th>User</th>
+        <th>Screen Shot</th>
+        <th>Deadline</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bugs.each do |bug|%>
+      <tr>
+        <td><%= bug.title %></td>
+        <td><%= bug.check_feature ? "Yes" : "No"%></td>
+        <td><%= bug.check_bug ? "Yes" : "No"%></td>
+        <td><%= bug.user.name%></td>
+        <td>
+          <%if bug.screen_shot.exists?%>
+          <img src="<%= bug.screen_shot.url(:thumb)%>" alt="">
+          <%else %>
+          No Image
+          <%end%>
+        </td>
+        <td><%= bug.deadline.strftime('%d %b %Y') if bug.deadline%></td>
+        <td>
+          <% if bug.check_feature%>
+            <%= select_tag 'Status', options_for_select(Bug::FEATURE_STATUS, :selected=>bug.status), {:onchange=>"bug_status(this.value, #{bug.id});"}%>
+          <% else %>
+            <%= select_tag 'Status', options_for_select(Bug::BUG_STATUS, :selected=>bug.status), {:onchange=>"bug_status(this.value, #{bug.id});"}%>
+          <% end %>
+
+        </td>
+
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,23 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Rails App</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="<%= users_path%>">Users</a></li>
+      <li><a href="<%= projects_path%>">Projects</a></li>
+        <li><a href="<%= bugs_path%>">My Bugs</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <% if user_signed_in? %>
+        <li>
+        <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+        </li>
+      <% else %>
+        <li>
+        <%= link_to('Login', new_user_session_path)  %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
