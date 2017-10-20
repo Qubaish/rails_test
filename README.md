@@ -8,7 +8,7 @@
 * Clone the project
 * bundle install
 * update database.yml file
-* rake db:migrate
+* rake db:create, rake db:migrate
 * rails s
 
 
